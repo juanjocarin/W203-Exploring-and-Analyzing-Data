@@ -1,0 +1,185 @@
+Country	Avg.IQ
+Afghanistan	84
+Albania	90
+Algeria	83
+Andorra	98
+Angola	68
+Antigua and Barbuda	70
+Argentina	93
+Armenia	94
+Australia	98
+Austria	100
+Azerbaijan	87
+Bahamas	84
+Bahrain	83
+Bangladesh	82
+Barbados	80
+Belarus	97
+Belgium	99
+Belize	84
+Benin	70
+Bhutan	80
+Bolivia	87
+Bosnia and Herzegovina	90
+Botswana	70
+Brazil	87
+Brunei Darussalam	91
+Bulgaria	93
+Burkina Faso	68
+Burundi	69
+Cambodia	91
+Cameroon	64
+Canada	99
+Cape Verde	76
+Central African Republic	71
+Chad	68
+Chile	90
+China	100
+Colombia	84
+Comoros	77
+Congo Dem. Rep.	78
+Congo Rep.	76
+Cook Islands	89
+Costa Rica	89
+Cote d Ivoire	69
+Croatia	90
+Cuba	85
+Cyprus	91
+Czech Republic	98
+Denmark	98
+Djibouti	68
+Dominica	67
+Dominican Republic	82
+Ecuador	88
+Egypt	81
+El Salvador	80
+Equatorial Guinea	59
+Eritrea	85
+Estonia	99
+Ethiopia	69
+Fiji	85
+Finland	99
+France	98
+Gabon	64
+Gambia	66
+Georgia	94
+Germany	99
+Ghana	73
+Greece	92
+Grenada	71
+Guatemala	79
+Guinea	67
+Guinea-Bissau	67
+Guyana	87
+Haiti	67
+Honduras	81
+Hungary	98
+Iceland	101
+India	82
+Indonesia	87
+Iran	84
+Iraq	87
+Ireland	92
+Israel	95
+Italy	102
+Jamaica	71
+Japan	105
+Jordan	84
+Kazakhstan	94
+Kenya	80
+Kiribati	85
+Korea Dem. Rep.	106
+Kuwait	86
+Kyrgyz Republic	90
+Lao PDR	89
+Latvia	98
+Lebanon	82
+Lesotho	67
+Liberia	67
+Libya	83
+Lithuania	91
+Luxembourg	100
+Macedonia	91
+Madagascar	82
+Malawi	69
+Malaysia	92
+Maldives	81
+Mali	74
+Malta	97
+Marshall Islands	84
+Mauritania	76
+Mauritius	89
+Mexico	88
+Micronesia	84
+Moldova	96
+Mongolia	101
+Morocco	84
+Mozambique	64
+Myanmar	87
+Namibia	74
+Nepal	78
+Netherlands	100
+New Zealand	99
+Nicaragua	81
+Niger	69
+Nigeria	84
+Norway	100
+Oman	83
+Pakistan	84
+Panama	84
+Papua New Guinea	83
+Paraguay	84
+Peru	85
+Philippines	86
+Poland	99
+Portugal	95
+Qatar	78
+Romania	94
+Russian Federation	97
+Rwanda	70
+Samoa	88
+Sao Tome and Principe	67
+Saudi Arabia	84
+Senegal	76
+Serbia	89
+Seychelles	86
+Sierra Leone	91
+Singapore	108
+Slovak Republic	96
+Slovenia	96
+Solomon Islands	84
+Somalia	68
+South Africa	77
+Spain	98
+Sri Lanka	79
+St. Kitts and Nevis	67
+St. Lucia	62
+St. Vincent and the Grenadines	71
+Sudan	71
+Suriname	89
+Swaziland	68
+Sweden	99
+Switzerland	101
+Syrian Arab Republic	83
+Tajikistan	87
+Tanzania	72
+Thailand	91
+Togo	70
+Tonga	86
+Trinidad and Tobago	85
+Tunisia	83
+Turkey	90
+Turkmenistan	87
+Uganda	84
+Ukraine	97
+United Arab Emirates	84
+United Kingdom	100
+United States	98
+Uruguay	96
+Uzbekistan	87
+Vanuatu	84
+Venezuela	84
+Vietnam	94
+"Yemen, Rep."	85
+Zambia	79
+Zimbabwe	82

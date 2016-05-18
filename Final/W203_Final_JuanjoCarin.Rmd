@@ -1,0 +1,397 @@
+---
+title: '**W203-1 - Fall 2014 - Final Exam**'
+author: "***Juan Jose Carin***"
+date: "*Sunday, December 14, 2014*"
+output:
+   pdf_document:
+      toc: true
+      fig_caption: yes
+      toc_depth: 6
+---
+\pagebreak
+
+# \underline{Part 1: Multiple Choice}
+
+I've included \underline{comments} in some sections of this Part, (not---only---to justify my choice but) to document my own reasoning when selecting the right answer, for future reference.
+
+## 1. d. ANOVA
+
+   \underline{Comment}: *ANOVA is the omnibus test for the overall effect. It tests whether at least one of the coefficients ($b_1$ or $b_2$ in this case) is not equal to zero.*
+
+## 2. b. All coefficients for each independent variable equal zero.
+
+   \underline{Comment}: *See the comment to the previous question.*
+
+## 3. e. None of the above
+
+   \underline{Comment}: *Rejecting the null hypothesis mentioned in the previous answer involves that at least one of the independent variables---but maybe not all, which discards (a), and the ANOVA test does not inform which one of them, and that discards (c)---has a significant contribution to the model. The null hypothesis does not involve $b_0$, so (b) is also discarded. And maybe a linear relationship may not be the best model for these data---the opposite of (d)---but the ANOVA test could be still significant, making us reject the null hypothesis.*
+
+## 4. b. Maximum number of pushups in 3 minutes
+
+   \underline{Comment}: *Because this variable is very likely to be highly correlated with X2 (triceps strength), which would involve high collinearity.*
+
+## 5. d. You examine a random sample of internet users in one Californian county, and compare them to a random sample of internet users in an adjacent California county where the local Internet Service Provider (ISP) has chosen to block access to online dating sites.
+
+   \underline{Comment}: *In a natural experiment, the treatment (the independent variable of interest, which is the use of online dating sites in this case) varies through some naturally occurring or unplanned event that happens to be exogenous to the outcome (the dependent variable of interest, which is the relationship satisfaction in this case).*
+
+## 6. e. Ecological validity
+   
+   \underline{Comment}: *Because it is the extent to which research results can be applied to real life situations outside of research settings. The way the question is phrased, it is very unlikely that any police officer will admit to be biased against a minority---he would probably detect what the question is trying to measure, especially if he has beeen assigned to treatment 1, answering "no" to it...although he would act differently in a real life situation.*
+   
+## 7. b. The power of the test
+
+   \underline{Comment}: *Unlike the other choices, it does not depend on the sample we're working with, but on other factors such as---mainly---the statistical significance criterion used in the test, the magnitude of the effect of interest in the population---i.e., the effect size---, and the sample size used to detect the effect.*
+
+## 8. a. Random variation in each sample drawn from a population will lead to larger or smaller *p*-values.
+   
+   \underline{Comment}: *The statement is true (p-values will vary), but on average the type-1 error should be 5%---supposed this was the selected statistical significance criterion---, not higher. The other statemnts **do** help explain why more than 5% of published results appear to be type-1 errors.*
+
+   *Let's see it with an example. Suppose our hypothesis is that men's height is significantly different that women's height. Each variable is normally distributed---it wouldn't have to be the case, we just need to know that the sampling mean will be normally distributed---with a standard deviation equal to 5. Let's say that men's average height is 180 cm, and women's average height is 170. The variance of the difference of both variables will be the sum of their variances ($5^2 + 5^2 = 50$). If we take 100 random samples of 50 men and 50 women, the average difference in height will be normally distributed, with a mean of 10 ($180 - 170$) and a standard deviation of $\sqrt{50} / \sqrt{50} = 1$. If then we calculate the probability of finding that mean difference, for the 100 samples, on average we would obtain that only in 5 out of 100 samples we would obtain extreme values with only a 5% probability. To prove my point, I run 100 simulations and calculate the number of them in which there were more than 5 False Positives (which should not exceed 5 in most of the cases).*
+
+\scriptsize
+
+```{r, echo=FALSE, message= FALSE, warning = FALSE}
+require(knitr,quietly=T)
+read_chunk('W203_Final_JuanjoCarin.R')
+```
+
+```{r Part1-8, message= FALSE, warning = FALSE}
+```
+
+\normalsize
+
+
+\pagebreak
+
+# \underline{Part 2: Test Selection}
+
+I've also included \underline{comments} in some sections of this Part, (not---only---to justify my choice but) to document my own reasoning when selecting the right answer, for future reference. I've also run some chunks of R script to plot a graph or perform the statistical procedure which I think it's the most appropriate, to illustrate my choice---the cleaning just deals with missing values (without worrying about whether non-missing values make sense or not, as I do in **Part 3**), and the tests may be not give good or significant results (but, from my point of view, they are the most appropriate ones for this dataset and the statement quoted in each point).
+
+```{r Libraries, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+```{r DataImport, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+## 1. a. chi-square
+
+\scriptsize
+
+```{r Part2-1, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+## 2. c. Logistic regression
+
+\scriptsize
+
+```{r Part2-2, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+## 3. d. Multiple Regression
+
+   \underline{Comment}: *Though the proper answer would have been **Simple Regression** (but we can also say the latter is just an specific case of the multiple regression, when there is only one independent variable).*
+   
+   *(a) is discarded because Fisher's exact test is a version of the chi-square test designed for small samples and 2x2 contingency tables---our sample is quite big and, above all, the variable years_in_relationship is not categorical but continuous. (b) is discarded because the assumptions of homogeneity of variance and normality are \underline{not} met. (c) is discarded because the scores of years_in_relationship come from different respondents, not the same at different moments.*
+   
+\scriptsize
+
+```{r Part2-3, echo = FALSE, message= FALSE, warning = FALSE, fig.width = 4, fig.height = 2, fig.cap = "Bar chart of the mean number of years in relationship depending on whether the respondent has flirted online or not"} 
+```
+
+\normalsize
+
+## 4. b. ANOVA
+
+   \underline{Comment}: *Since the outcome variable (adults_in_househould) is continuous, and the predictor variable (lgbt) is categorical, with more than 2 categories.*
+
+   *The most appropriate test would be a **robust ad-hoc** version of ANOVA, because the assumption of homogeneity of variance is not met, and there is not an specific hypothesis to make a planned contrast.*
+
+\scriptsize
+
+```{r Part2-4, echo = FALSE, message= FALSE, warning = FALSE, fig.width = 4, fig.height = 2, fig.cap = "Line chart with error bars of the mean number of adults in the respondent's household depending on sexual orientation"} 
+```
+
+\normalsize
+
+## 5. a. Pearson correlation
+
+   \underline{Comment}: *Because both variables are continuous.*
+
+\scriptsize
+
+```{r Part2-5, echo = FALSE, message= FALSE, warning = FALSE, fig.width = 4, fig.height = 2, fig.cap = "Scatterplot of age against number of children with a regression line (and 95% confidence interval) added)"} 
+```
+
+\normalsize
+
+\pagebreak
+
+## 6. b. Wilcoxon Rank-Sum Test
+
+   \underline{Comment}: *Since the outcome variable (number of children) is continuous, the predictor variable (sex) is categorical (with only 2 categories), and the assumption of normality is not met in the Femlae group (besides, there are very few observations in the sample).*
+
+\scriptsize
+
+```{r Part2-6, echo = FALSE, message= FALSE, warning = FALSE, fig.width = 4, fig.height = 2, fig.cap = "Boxplot of number of children at 31, split by gender"} 
+```
+
+\normalsize
+
+
+\pagebreak
+
+# \underline{Part 3: Data Analysis}
+
+
+## 1. OLS Regression
+
+### a. The *life_quality* variable measures quality of life on a 5-point scale, where $1 = excellent$ and $5 = poor$. Reverse the scale so that $5 = excellent$ and $1 = poor$. What is the mean quality of life in the sample?
+
+First, we reverse the scale.
+
+\small
+
+```{r Part3-1-a-1, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+Then we make a small test to check we've done that correctly (i.e., 5 is recoded as 1, 1 as 5, 4 as 2, and 2 as 4... and the sum of the numeric values is also correct).
+
+\small
+
+```{r Part3-1-a-2, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+Finally, we calculate the mean value of the recoded variable.
+
+\small
+
+```{r Part3-1-a-3, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+As shown above, the **mean quality of life in the sample** now is **`r round(mean(as.numeric(life_quality), na.rm = TRUE), 2)`**.
+
+We'll use these recoded values in the rest of the assignment.
+
+### b. What is the mean of *years_in_relationship* in the sample?
+
+\small
+
+```{r Part3-1-b, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+As shown above, the **mean of Years in Relationship in the sample** (after converting the variable to a character string before converting it to a numeric vector), is now **`r round(mean(years_in_relationship, na.rm = TRUE), 2)`**.
+
+### c. To run a nested regression in R, your first step will be to select just the rows in your datase that have no missing values in your final OLS model. In this case, you will want just the rows that have non-missing values for *life_quality*, *years_in_relationship*, and *use_internet*. How many cases does this leave you with?
+
+First we check how many cases we originally had, and how many values of the variables *life_quality* and *years_in_relationship* are non-missing.
+
+\small
+
+```{r Part3-1-c-1, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+Then---as we already did with the two previous variables---we recode *use_internet* and check how many of its cases are non-missing (\underline{for every variable we assume that not only missing values, but also "Don't know" or}
+\underline{"Refused" are equivalent to NAs because they do not provide any information}).
+
+\small
+
+```{r Part3-1-c-2, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+The final step is to put the three variables in the same (new) dataframe and discard the missing values.
+
+\small
+
+```{r Part3-1-c-3, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+As shown above, we have **`r dim(Dating_P3)[1]` cases left**.
+
+**But...** if we make a more detailed analysis, we find out that some of the left values do not make sense: some of these cases correspond to \underline{people who have had a relationship longer than their whole life, or that started} \underline{it when they were children}.
+
+Assuming that nobody would start a relationship when he or she is younger than 10-years old, we find out 3 possible cases that may contain wrong data (people that started their current relationship when they were 5, 0... and --16 years old!).
+
+\small
+
+```{r Part3-1-c-4, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+\underline{Anyway, we'll use the `r dim(Dating_P3)[1]` cases in the rest of the assignment (assuming it was the age which was not prop-} \underline{erly entered in some cases)}.
+
+### d. Fit an OLS model to the data from the previous step that predicts *life_quality* as a linear function of *years_in_relationship*. What is the slope coefficient you get? Is it statistically significant? What about practically significant?
+
+First of all, let's see the main statistics of both variables, and a couple of graphs reprenting them.
+
+\small
+
+```{r Part3-1-d-1, message= FALSE, warning = FALSE}
+```
+
+Note that the mean (and the rest of statistics) of both *life_quality* and *years_in_relationship* are different to those reported in ***(a)*** and ***(b)***, because we are now considering less cases (discarding those with missing values in the other variable as well as in *use_internet*).
+
+```{r Part3-1-d-2, echo = FALSE, message= FALSE, warning = FALSE, fig.width = 5, fig.height = 2.5, fig.cap = "Scatterplot (using hexagon binning) of Years in Relationship against Life Quality with a regression line (and 95% confidence interval) added)"} 
+```
+
+```{r Part3-1-d-3, echo = FALSE, message= FALSE, warning = FALSE, fig.width = 5, fig.height = 3, fig.cap = "Scatterplot of Years in Relationship against Life Quality with linear and non-linear regression curves added)"} 
+```
+
+\normalsize
+
+\pagebreak
+
+It seems that most of the people in the sample (more than 62% of them) have a Life Quality of 3 or 4. There is also a lot of cases (more than 38%) whose Years in Relationship is 0. Overall, there seems to be a linear trend, so as years in relationsip increase, life quality grows (from 3 to 4).
+
+
+The next step is to build the model and quantify its (statistical and practical) significance.
+
+\small
+
+```{r Part3-1-d-5, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+**The slope coefficient is `r model1$coefficients[2]`** (positive, as the previous graphs suggested---so the higher the number of years in relationship, the higher the life quality): as years in relationship increase by one unit, life quality increases by `r round(model1$coefficients[2], 3)` units. It is **statistically significant** ($p = `r round(summary_model1$coefficients[2, 4], 3)` < 0.05$, and hence---as shown above---its confidence interval does not cross 0---though the lower bound is quite close to it).
+
+Another way to see the relationship between both variables is using the standardized beta estimates:
+
+\small
+
+```{r Part3-1-d-6, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+As years in relationship increase by one standard deviation (`r round(sd(Dating_P3$years_in_relationship), 1)`), life quality increases by `r round(lm.beta(model1), 4)` standard deviations ($`r round(lm.beta(model1), 4)` * `r round(sd(Dating_P3$life_quality), 3)` = `r round(lm.beta(model1) *  sd(Dating_P3$life_quality), 3)`$). I.e., for every `r round(sd(Dating_P3$years_in_relationship), 1)` years that a respondent spends in a relationship, his or her life quality increases by less than `r round(lm.beta(model1) *  sd(Dating_P3$life_quality), 1)` units. So **the practical significance is small**. 
+
+Aditionally, let's check the goodness of fit. The value of R-squared is about `r round(summary_model1$r.squared, 4)`: the years in relationship accounts for less than $`r round(summary_model1$r.squared, 3)*100`$% of the variation in life quality. (The adjusted R-squared is `r round(summary_model1$adj.r.squared, 4)`, quite similar to the previous one, so the cross-validity of the model is quite good.)
+
+### e. Now fit a second OLS model to the data. Keep *life_quality* as your dependent variable, but now use both *years_in_relationship* and *use_internet* as your explanatory variables. What is the slope coefficient for *use_internet*? Is it statistically significant? What about practically significant?
+
+First of all, let's see the values of *use_internet*, compare the mean of *life_quality* depending on whether the respondent uses Internet or not, and plot the new scatterplot.
+
+\scriptsize
+
+```{r Part3-1-e-1, echo = FALSE, message= FALSE, warning = FALSE, fig.width = 5, fig.height = 2.5, fig.cap = "Scatterplot of Years in Relationship against Life Quality, depending on the Use of Internet, with a regression line (and 95% confidence interval) added)"} 
+```
+
+\normalsize
+
+\pagebreak
+
+Now we build the new model, adding that variable as a predictor of the Life Quality.
+
+\small
+
+```{r Part3-1-e-2, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+**The slope coefficient for *use_internet* is `r model2$coefficients[3]`**. So (assuming no change in *years_in_relationship*) as the use of Internet increases by one unit, life quality increases by `r round(model2$coefficients[3], 3)` units. Since *use_internet* is a dichotomous variable, that means that using Internet implies an increase of `r round(model2$coefficients[3], 3)` units in life quality, on average. This coefficient is **highly statistically significant** ($p = `r format(summary_model2$coefficients[3, 4], digits = 3, scientific = TRUE)`$). And that moderate change in **life_quality** involves a **medium practical significance**.
+
+The value of R-squared is now about `r round(summary_model2$r.squared, 4)`: the two predictors account for less than $`r round(summary_model2$r.squared, 3)*100`$% of the variation in life quality. (The adjusted R-squared is `r round(summary_model2$adj.r.squared, 4)`, quite similar to the previous one, so the cross-validity of the model is quite good.)
+
+### f. Compute the *F*-ratio and associated *p*-value between your two regression models. Assess the improvement from your first model to your second.
+
+\small
+
+```{r Part3-1-f, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+**The *F* statistic is `r round(anova(model1, model2)$F[2], 2)` and its associated *p*-value is `r format(anova(model1, model2)$Pr[2], digits = 2, scientific = TRUE)`**. That means that the second model (statistically) significantly improves the fit of the model to the data compared to the first model.
+
+
+## 2. Logistic Regression
+
+### a. What are the odds that a respondent in the sample has flirted online at some point (*flirted_online*)?
+
+These odds are the probability of having flirted online divided by the probability of not having done so. All we need to calculate them is the number of respondents who have flirted online at some point, and the number of respondents who have never flirted online.
+
+$odds = {P(flirted\quad online) \over 1 - P(flirted\quad online)} = \frac{{respondents\quad who\quad have\quad flirted\quad online\quad}/{\quad TOTAL}}{{respondents\quad who\quad have\quad not\quad flirted\quad online\quad}/{\quad TOTAL}}$
+
+$odds = \frac{respondents\quad who\quad have\quad flirted\quad online}{respondents\quad who\quad have\quad not\quad flirted\quad online}$
+
+\small
+
+```{r Part3-2-a, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+As shown above, **the odds are `r round(odds, 3)`** (considering the `r length(flirted_online[!is.na(flirted_online)])` respondents in the sample that answered affirmatively or negatively). I.e., for every 100 respondents who have not flirted online, there are only about `r round(odds*100, 0)` who have flirted online (or that, for every respondent who have flirted online, there are almost 4 who have not).
+
+### b. Conduct a logistic regression to predict *flirted_online* as a function of where a respondent lives (*usr*). What Akaike Information Criterion (AIC) does your model have?
+
+Before we conduct the regression, let's also plot the number of respondents who have flirted onine or not depending on the area they live.
+
+\scriptsize
+
+```{r Part3-2-b-1, echo = FALSE, message= FALSE, warning = FALSE, fig.width = 5, fig.height = 3, fig.cap = "Count of respondents depending on the Area they live, and whether they have flirted online or not"}
+```
+
+\normalsize
+
+\underline{Note}: Now the sample is reduced to `r dim(Dating_P4)[1]` respondents since 2 of them did not report the area where they live.
+
+The previous plot already gives us an idea of how the area where a respondent lives is related to having flirted online: the odds of \underline{not} having flirted online seem to be about 6---this is just a very rough estimation based on the plot and the table above---in rural areas, 4 in suburban areas, and 3 in urban areas. Put it the other way, the odds of having flirted online seem to increase when moving from rural to urban areas.
+
+\small
+
+```{r Part3-2-b, echo = FALSE, message= FALSE, warning = FALSE}
+```
+
+\normalsize
+
+The coefficients for Suburban and Urban (being Rural the baseline) are positive (and both statistically significant, even when the Wald statistics are sometimes underestimated), which corroborates our previous estimation based on the plot. 
+
+As shown above, **the AIC value is `r round(AIC(log_model), 1)`**. It is 6 units higher than the \underline{residual deviance}---i.e., the deviance of the model we've built---because the predictor variable has 3 categories (and, as we know, $AIC = deviance + 2k = -2LL + 2k$).
+
+The deviance of the model is lower than the \underline{null deviance}, so this model we've built is better at predicting whether a respondent has flirted online than the null model. And this overall improvement---compared to the null model---is (statistically) significantly better:
+
+\small
+
+```{r Part3-2-b-2, echo = FALSE, message= FALSE, warning = FALSE}
+```
+
+\normalsize
+
+
+### c. According to your model, how much bigger are the odds that an urban respondent has flirted online than the odds that a rural respondent has flirted online? Is this effect practically significant?
+
+We need to calculate the **Odds Ratio**:
+
+\small
+
+```{r Part3-2-c, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+**The odds than an urban respondent has flirted online are about `r round(exp(log_model$coefficients)[3], 1)` times bigger than the odds that a rural respondent has flirted one**. I.e., a `r (round(exp(log_model$coefficients)[3], 2)-1)*100`% increase in the odds from living in a Urban area rather than in a Rural one. 
+
+The value is much bigger than 1 (and the confidence interval does not cross 1), so **the effect** of living in a Urban area (compared to a Rural one) **is practically significant**.

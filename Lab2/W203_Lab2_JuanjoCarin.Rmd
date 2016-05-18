@@ -1,0 +1,238 @@
+---
+title: '**W203-1 - Fall 2014 - Lab 2**'
+author: "***Juan Jose Carin***"
+date: "*Sunday, October 19, 2014*"
+output:
+   pdf_document:
+      toc: true
+      fig_width: 6
+      fig_height: 3.5
+      fig_caption: yes
+      toc_depth: 6
+---
+\pagebreak
+
+# Part 1: Multiple Choice
+
+I've included \underline{comments} in some sections of this Part, (not---only---to justify my choice but) to document my own reasoning when selecting the right answer, for future reference.
+
+## 1) a) Bar charts
+
+   \underline{Comment}: *Line charts <u>would</u> suggest a sequence (a time series), which discards (e) and (f).*
+
+## 2) c) $H_0: \mu = \mu_0; H_a: \mu > \mu_0$
+
+   \underline{Comment}: *As usual, the null hypothesis is an equality. The alternative hypothesis involves a specific direction (>), which in turn involves a one-tailed test, because we're interested in testing the claim that $\mu$ is greater than $\mu_0=10$.*
+
+## 3) f) None of the above
+
+   \underline{Comment}: *The p value alone tells us nothing about neither alpha nor the effect size.*
+
+## 4) e) a and d
+   
+   (The \underline{possiblity of a Type II error} will go \underline{up} and the \underline{statistical power} will go \underline{down} in the second study.)
+
+## 5) e) Raise the variable to a power greater than 1
+   
+   \underline{Comment}: *To correct the negative skew.*
+
+## 6) b) The standard deviation of Berkeley student ages is 2 years
+   
+   \underline{Comment}: *Since the null hypothesis is usually an equality statement, we discard (a), which involves a range, and (c) and (d), which involve inequalities.*
+      
+   *The selected null hypothesis could be tested, for instance, using a Chi-square test for variance (**provided that** the observations are independent and come from a normal distribution).*
+
+## 7) d) What is the probability of the data we observe, assuming that the null hypothesis is true?
+
+## 8) c) Assuming your null hypothesis is actually false, your p-value is likely to decrease as you increase your sample size
+   
+   \underline{Comment}: *(f) (Assuming your null hypothesis is actually true, and you were to repeat the experiment a large number of times, you would expect a type 1 error 4% of the time) seemed a little bit tricky, but 4% is the value of type I error for the specific sample that has been drawn in this particular study. Subsequent samples would lead to a different sample mean and hence to different test statistics and p-values (=type I errors).*
+   
+## 9) d) Independence of observations
+
+   \underline{Comment}: *(d) Since participants are rewarded if they correctly recall, and they can complete the experiment during a really long period, it is likely that some of them get in contact and influence each other's responses.*
+
+## 10) f) None of the above
+
+   \underline{Comment}: *(d) makes no sense at all, and the rest involve Type I or Type II errors, or statistical power, and the three of them imply certainty about which is true (type I error implies that it's the null hypothesis which is true, and type II error and power imply that the alternative is the right one.*
+
+*************
+
+# Part 2: Test Selection
+
+## 1) b) Levene's test
+
+## 2) a) Shapiro-Wilk test
+
+*************
+
+# Part 3: Data Analysis and Short Answer
+```{r, echo=FALSE}
+require(knitr,quietly=T)
+read_chunk('W203_Lab2_JuanjoCarin.R')
+```
+
+```{r Libraries, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+## 1) Data Import and Error Checking
+
+```{r 1-DataImport, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+The GSS dataframe contains information about `r dim(GSS)[1]` people regarding to `r dim(GSS)[2]-1` variables (plus their ID number): age, month of birth, work & marital status, number of siblings and children, race, income...
+
+### a. Examine the agewed variable (age when married).
+
+```{r 1a-Examine1, echo = FALSE, message= FALSE, warning = FALSE, fig.cap = "Histogram of the agewed variable"} 
+```
+
+```{r 1a-Examine2, echo = FALSE, message= FALSE, warning = FALSE, fig.cap = "Boxplot of the agewed variable"} 
+```
+
+None of the `r dim(GSS)[1]` observations in the GSS dataframe have NA values for the agewed variable. The variable ranges from `r min(GSS$agewed)` to `r max(GSS$agewed)`, the Interquantile Range is `r quantile(GSS$agewed, .75)`-`r quantile(GSS$agewed, .25)` years (i.e., according to the GSS dataframe 50% of the `r dim(GSS)[1]` people contained in it got married within that range of ages), the median is `r median(GSS$agewed)` years, and the mean is `r round(mean(GSS$agewed), 1)` years.
+
+\pagebreak
+
+#### i. What are the value(s) of agewed, if any, that do not meaningfully correspond to ages?
+
+1) The minimum value of the agewed variable is **`r min(GSS$agewed)`**... and---as shown below---that's the value for \underline{`r sum(GSS$agewed ==0)`} of the cases (`r round(100*sum(GSS$agewed ==0)/dim(GSS)[1], 1)`% of the total). It seems very unlikely that newborns (whether so many or even a few) get married. Moreover, if we analyze the marital status of those people, we find out that all of them have never been married, so the problem is that the variable was unproperly coded in their case.
+
+```{r 1ai-agewed0, message= FALSE, warning = FALSE} 
+```
+
+2) The maximum value of the agewed variable (**`r max(GSS$agewed)`**) is unlikely but possible. But looking at the histogram on the previous page (*\underline{Figure 1}*) we see that there are a significant number of cases with a similar value, so we check high values (based on the histogram, let's say greater than 90) of the variable, and find out---as shown below---that there are \underline{`r sum(GSS$agewed > 90)`} people whose value of the agewed variable is exactly `r max(GSS$agewed)` (`r round(100*sum(GSS$agewed == 99)/dim(GSS)[1], 1)` % of the total), which does not seem very probable. This may be due to an unproper coding, or to errors entering the data, which should be corrected anyway.
+
+```{r 1ai-agewed99, message= FALSE, warning = FALSE} 
+```
+
+\pagebreak
+
+### b. Recode any value(s) that do not correspond to age as NA.
+
+We just have to assign NA to those cases where agewed is **`r min(GSS$agewed)`** or **`r max(GSS$agewed)`**.
+
+```{r 1b-Recode, ecoh = FALSE, message= FALSE, warning = FALSE} 
+```
+
+```{r 1b-Histogram, echo = FALSE, message= FALSE, warning = FALSE, fig.cap = "New histogram of the agewed variable"} 
+```
+
+#### i. What is the mean of the agewed variable?
+\hfill \break
+
+Now (having `r sum(is.na(GSS$agewed))` NA cases) the agewed variable ranges from `r min(GSS$agewed, na.rm = TRUE)` to `r max(GSS$agewed, na.rm = TRUE)`, the Interquantile Range becomes `r quantile(GSS$agewed, na.rm = TRUE, .75)`-`r quantile(GSS$agewed, na.rm = TRUE, .25)` years, the median is `r median(GSS$agewed, na.rm = TRUE)` years, and **\underline{the mean is `r round(mean(GSS$agewed, na.rm = TRUE), 1)` years}**.
+
+```{r 1bi-Mean, ecoh = FALSE, message= FALSE, warning = FALSE} 
+```
+
+\pagebreak
+
+## 2) Checking assumptions
+
+### a. Produce a QQ plot for the agewed variable.
+
+```{r 2a-QQplot, echo = FALSE, message= FALSE, warning = FALSE, fig.height=3, fig.cap = "QQ-plot of the agewed variable"} 
+```
+
+Though the plot above is quite explanatory, we may want to standardize the agewed variable. This way we are able to better compare the cumulative values of this sample to those of the standard normal distribution *N(0,1)* (as we know, if the sample distribution were normal, the plot would be very similar to the straight diagonal line *y=x*).
+
+```{r 2a-QQplot-standardized, echo = FALSE, message= FALSE, warning = FALSE, fig.height=3, fig.cap = "QQ-plot of the agewed variable standardized"} 
+```
+
+\pagebreak
+
+#### i. Using this plot information, is agewed normal and how do you know?
+\hfill \break
+
+(As mentioned in the previous page) If agewed were normal, the QQ plot would have shown a straight diagonal line. This is not the case, so **\underline{agewed is far from being normal}**. To give a more detailed explanation:
+
+1) The left tail twists off clockwise from the reference line (so there is less data in the left tail than in a
+normal distribution), and the right tail twists counterclockwise (so there is more data in the right tail
+than in a normal distribution). Both facts, combined, indicate **\underline{positive skew}**.
+
+2) The fact that the center region of the plot lies below the diagonal line indicates **\underline{positive kurtosis}** or
+**\underline{leptokurtosis}**.
+
+### b. Perform a Shapiro-Wilk test on the agewed variable.
+
+```{r 2b-Shapiro-WilkTest, message= FALSE, warning = FALSE} 
+```
+
+#### i. What is the null and alternative hypothesis for your test?
+\hfill \break
+
+The **null-hypothesis** is that the values or scores of the agewed variable are \underline{normally distributed}, and the
+**alternative hypothesis** is that they are not
+
+#### ii. What is your p-value, and what is your specific conclusion?
+\hfill \break
+
+As seen above, **\underline{the p-value is `r format(shapiro.test(GSS$agewed)$p.value, digits=2)`}**. Since it is much smaller than any $\alpha$ level we could have chosen, **\underline{the null hypothesis is rejected}**---we have highly statistically significant evidence that the agewed scores are not from a normally distributed population.
+
+\underline{Anyway}, we should consider that our sample is very large (`r sum(!is.na(GSS$agewed))` scores), so the result of the Shapiro-Wilk test may not be considered conclusive. **\underline{The conclusion above comes also from the previous QQ plots}** **\underline{and histogram}** (*\underline{Figures 3}* to *\underline{5}*).
+
+We could also consider the specific values of kurtosis and skew:
+
+```{r 2b-Skew&Kurtosis, message= FALSE, warning = FALSE} 
+```
+
+Since the values of skew and kurtosis divided by 2 standard errors are, respectively, `r round(stat.desc(GSS$agewed, norm = TRUE)["skew.2SE"], 1)` and `r round(stat.desc(GSS$agewed, norm = TRUE)["kurt.2SE"], 1)`, both much greater than *3.29/2 $\simeq$ 1.65*, both are highly significant (at p<0.001)... but again, the sample size has a great impact on those values.
+
+### c. What is the variance of agewed for men? What is the variance of agewed for women?
+
+```{r 2c-Variances, message= FALSE, warning = FALSE} 
+```
+
+```{r 2c-Variances-hist, echo = FALSE, message= FALSE, warning = FALSE, fig.height = 3, fig.cap = "Histogram of the agewed variable by sex"} 
+```
+
+### d. Perform a Levene's test for the agewed variable grouped by men and women.
+
+```{r 2d-LeveneTest, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+#### i. What is the null and alternative hypothesis for this test?
+\hfill \break
+
+The **null-hypothesis** is that the variances of a variable through different groups or levels of another variable
+are equal, i.e., there is \underline{homogeneity of variance}. The **alternative hypothesis** is that there is a difference between the variances of each group.
+
+#### ii. What is your p-value, and what is your specific conclusion?
+\hfill \break
+
+As seen above, **\underline{the p-value is 0.327}**. Since it is much greater than 0.05, it is not statistically significant, and hence **\underline{we fail to reject the null hypothesis---we retain it}**.
+
+\underline{Anyway}, we should consider again that our sample is very large (`r sum(!is.na(GSS$agewed))` scores), so the result of the Levene's test may not be considered conclusive.
+
+As a double check, we could look at **Hartley's $F_max$** or **variance ratio**: for such a large sample, the value of the test statistic *F* must be smaller than 1 (regardless of the number of variances being compared) to be non-significant. Because the value we have obtained is *F(1,1200) = `r round(leveneTest(GSS$agewed, GSS$sex)["group", "F value"], 3)` < 1* **\underline{we can maintain our previous conclusion that the result is non-significant}**.
+
+\hfill \break
+
+## 3. More hypothesis testing
+
+### a. Suppose we have a hypothesis that the age of marriage (agewed) in the population has a mean of exactly 23, with a standard deviation of 5 years (you should assume this value is correct rather than estimating the standard deviation from the data). Perform a z-test to analyze this hypothesis.
+
+```{r 3a-zTest, message= FALSE, warning = FALSE} 
+```
+
+We could also make use of the *z.test* function in the *BSDA* package:
+
+```{r 3a-zTest2, message= FALSE, warning = FALSE} 
+```
+
+#### i. What is the null and alternative hypothesis for this test? 
+\hfill \break
+
+The **null-hypothesis** is that \underline{the mean value of the agewed variable for the whole population} (not for the sample included in the GSS dataframe) \underline{is} the mentioned \underline{$\mu_0$ = 23}. The **alternative hypothesis** is that the mean of the population is different (greater or smaller; i.e., this is a two-tailed test).
+
+The assumption in a z-test, under the null hypothesis, is that the distribution of the test statistic can be approximated by a normal distribution. In this particular case the test statistic is the sample mean ($bar{X}$), and because of the central limit theorem and our sample size (`r sum(!is.na(GSS$agewed))` scores, excluding NA values), we can state that this assumption is true (i.e., $\bar{X}$ will be approximately normally distributed). And so will be the corresponding z score ($z = \frac{\bar{X}-\mu_0}{\sigma / \sqrt{N}}$), with a mean of 0 and a standard deviation of 1.
+
+To calculate the standard error---and hence the z score---we need to know the standard deviation of the population ($\sigma$). In this particular case we know that $\sigma = 5$; otherwise we would have to use an approximate value, e.g., the standard deviation of the sample (because our sample is so large, we still could use the z-test in that case; otherwise a t-test would be more appropriate to account for the uncertainty in the sample variance).
+
+#### ii. What is your p-value, and what is your specific conclusion?
+\hfill \break
+
+The p-value for this two-tailed test is calculated as $2\Phi(-|z|)$ or $2(1 - \Phi(|z|$), where $\Phi$ is the standard normal cumulative distribution function (function *pnorm* of **R**).
+
+As seen above, z is `r round(z.test(GSS$agewed[!is.na(GSS$agewed)], alternative = "two.sided", mu = mu0, sigma.x = SD, conf.level = 0.95)$statistic, 2)` and **\underline{the p-value is `r round(z.test(GSS$agewed[!is.na(GSS$agewed)], alternative = "two.sided", mu = mu0, sigma.x = SD, conf.level = 0.95)$p.value, 3)`}**. That means that, under the null hypothesis, the probability of a simple random sample of `r sum(!is.na(GSS$agewed))` people having a mean not as extreme as the one contained in the GSS dataframe---i.e., larger than `r round(mean(GSS$agewed, na.rm=TRUE),2)` or smaller than `r round(2*mu0-mean(GSS$agewed, na.rm=TRUE),2)`---would be "only" `r round(2*pnorm(abs(z.test(GSS$agewed[!is.na(GSS$agewed)], alternative = "two.sided", mu = mu0, sigma.x = SD, conf.level = 0.95)$statistic))-1, 3)`. In other words, since the p-value is greater than 0.05, it is not statistically significant, and hence **\underline{we fail to reject the null hypothesis, and we retain it}**.

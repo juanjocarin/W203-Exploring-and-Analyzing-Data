@@ -1,0 +1,357 @@
+---
+title: '**W203-1 - Fall 2014 - Lab 3**'
+author: "***Juan Jose Carin***"
+date: "*Friday, November 21, 2014*"
+output:
+   pdf_document:
+      toc: true
+      fig_width: 6
+      fig_height: 3.5
+      fig_caption: yes
+      toc_depth: 6
+---
+\pagebreak
+
+# \underline{Part 1: Multiple Choice}
+
+I've included \underline{comments} in some sections of this Part, (not---only---to justify my choice but) to document my own reasoning when selecting the right answer, for future reference.
+
+## 1) b) Natural experiment
+
+   \underline{Comment}: *The conditions for a true experiment are not met, which discards some of the other answers. And there is a treatment condition (the photos of cats---something not selected by the experimenter), which discards an "Associatonal non-experiment."*
+
+## 2) c) Pretest-postest experimental design
+
+   \underline{Comment}: *All the conditions---the 3 treatment conditions would be the different artists, and the control condition would be the "quiet room"---are measured before and after (the treatment is applied to 3 of the 4 groups).*
+
+## 3) f) None of the above
+
+   \underline{Comment}: *Answers (a) to (c) would be true if we exchanged "parametric" by "non-parametric" and vice versa, so they are discarded, as well as (e). (d) is not always true.*
+
+## 4) c) Dependent-sample *t*-test
+
+   \underline{Comment}: *Since we are comparing the means of 2 variables measured within the same group.*
+
+## 5) d) 42
+   
+   \underline{Comment}: *We know that $P(A\cap{B}) = P(A)\cdot{P(B|A)}$, and since A and B are independent, $P(B|A) = P(B)$, and hence $P(A\cap{B}) = P(A)\cdot{P(B)} = 0.6\cdot{0.7} = 0.42$... if we worked with the whole population, which is not the case. For any sample (of this size: 100), the probability may differ, but its expected value will be also $0.42$, so for 100 San Franciscans randomly selected, the expected value---i.e., the mean---of those who drink beer **and** wear plaid will be $\mu = n\cdot{p} = 100\cdot{0.42} = 42$.*
+
+   *The following R script, where 10,000 samples are simulated, demonstrates it.*
+
+\small
+
+```{r, echo=FALSE}
+require(knitr,quietly=T)
+read_chunk('W203_Lab3_JuanjoCarin.R')
+```
+
+```{r Part1-5, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+## 6) a) Yes, because the odds of getting a type 1 error for at least one month are inflated above 5%.
+   
+   \underline{Comment}: *The odds of getting a type 1 error will actually be above 95%, since $1 - .95^{{12 \choose 2}} = 1 - .95^{66} \simeq{1 - 0.0339} = 0.9661$. A corrected t-test (using a method like Bonferroni) would be necessary.*
+
+## 7) b) External validity
+
+   \underline{Comment}: *Caused by the **sampling bias** due to a non-random sample of the population---only a specific subset of the population is represented, one with traits related to the dependent variable under study (self-confidence). Therefore, the results cannot be generalized to the whole population.*
+   
+   *[\underline{Internal validity} would have been threatened if we would have had **(sample) selection bias**, i.e., errors occurring not in the process of gathering the sample but in any process thereafter---for instance, there are differences between both groups (an unequal number of test subjects have similar subject-related variables) at pre-test, that may partially cause the observed outcome.]*
+
+## 8) b) Difference of means, divided by the pooled standard deviation of the variable.
+   
+   \underline{Comment}: *I.e., Cohen's d.*
+
+\hfill \break
+
+*************
+
+\hfill \break
+
+# \underline{Part 2: Test Selection}
+
+\small
+
+```{r Libraries, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+```{r DataImport, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+## 1) e) Chi-square test
+
+   \underline{Comment}: *Since the outcome variable (income91) is categorical (several levels or categories), and there is a single predictor variable (visitart), which is also categorical (with 2 possible values, different entities in each category).*
+
+## 2) d) Anova
+
+   \underline{Comment}: *Since the outcome variable (age) is continuous, and the predictor variable (country) is categorical (with more than 2 possible values).*
+
+\small
+
+```{r Part2-2, echo = FALSE, message= FALSE, warning = FALSE, fig.cap = "Error bar graph of the mean Age depending on Opinion of Country Music"} 
+```
+
+\normalsize
+
+\pagebreak
+
+## 3) a) *t*-test
+
+   \underline{Comment}: *Since the outcome variable (sibs) is continuous, and the predictor variable (not relig but a new variable based on it: catholic or not) is categorical (with only 2 categories). Moreover, the assumptions of homogeneity of variance and normality are met (otherwise the \underline{Wilcoxon rank-sum test} would be the answer).*
+
+\small
+
+```{r Part2-3, echo = FALSE, message= FALSE, warning = FALSE, fig.cap = "Bar chart of the mean number of siblings for catholic vs. non-catholic, for men and women"} 
+```
+
+\normalsize
+
+## 4) b) Pearson correlation
+
+   \underline{Comment}: *Since both variables are continous.*
+
+```{r Part2-4, echo = FALSE, message= FALSE, warning = FALSE, fig.cap = "Scatterplot of TV hours against Years of education"} 
+```
+
+\pagebreak
+
+## 5) d) Chi-square test
+
+   \underline{Comment}: *Because there are 2 variables, and both are categorical.*
+
+\hfill \break
+
+*************
+
+\hfill \break
+
+# \underline{Part 3: Data Analysis and Short Answer}
+
+
+## 1) Task 1: Chi-square test between marital status (*marital*) and political orientation (*politics*).
+
+First of all we look for inappropriate values: *marital* has one "NA" value (so it is coded NA), and *politics* have some NA values.
+
+\small
+
+```{r DataImport, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+```{r Part3-1-intro1, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+After that we can run the Chi-square test (with two different commands, though the results are the same):
+
+\small
+
+```{r Part3-1-intro2, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+### A. What are the null and alternative hypothesis for your test?
+
+The **null-hypothesis** is that there is \underline{no relationship between} the \underline{two categorical variables} (i.e., between any of their categories), that have been cross-tabulated. In that case there would be no significant difference between the expected frequencies (those expected by chance alone) and the observed frequencies in any category. In other words, it means that the observed cell counts are independent from one another.
+
+The **alternative hypothesis** is the opposite: a relationship exists between any of the categories, so there is a significant difference between the expected and the observed frequencias at least in one case, etc. So in this particular case the alternative hypothesis would be true if there were an association between marital status and political orientation (whatever it might be: e.g., a significant number of conservative people are married, or those individuals that are liberal tend to never get married more than other people...)
+
+```{r 1a-Examine1, echo = FALSE, message= FALSE, warning = FALSE, fig.cap = "Histogram of the agewed variable"} 
+```
+
+### B. What test statistic and p-value do you get?
+
+As shown before (at the top of this page and also in page 8), the **Chi-square test statistic** is **`r cs[[1]]`** and the **p-value** is **`r format(cs[[3]], digits = 2, scientific = TRUE)`** (\underline{highly statistically significant}).
+
+```{r Part3-1-B1, message= FALSE, warning = FALSE} 
+```
+
+That means that there are significant differences between the observed and expected values (and hence a relationship exists between political orientation and marital status).
+
+We can rely on the results of this test, since **the two important assumptions are met**: each person contributes to only cell of the contingency table (categories are mutually exclusive and exhaustive), and the expected frequencies are greater than 5 in all cases (the minimum expected frequency is 5.193, as can be seen at the top of this page).
+
+```{r Part3-1-B2, message= FALSE, warning = FALSE} 
+```
+
+### C. Conduct an effect size calculation for your relationship.
+
+Our contingency table is much larger than 2x2, so \underline{Odd Ratios} would not be so appropriate. We'll use **Cramer's V** instead.
+
+```{r Part3-1-C, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+Since its value is so small (under 0.2), we can say that **the strength of association between the two variables is weak**.
+
+### D. Evaluate your hypothesis in light of your tests of statistical and practical significance. What, if anything, can you conclude from your results?
+
+There is a statistically significant association between political orientation and marital status: $\chi^{2}(16) = 44.23, p < .001$. Hence, we are able to reject the null hypothesis. However, the practical significance of this finding is very small: $V = 0.088$, so the observed effect is unimportant, not meaningful, and not of real interest.
+
+## 2) Task 2: Pearson correlation analysis between age when married (*agewed*) and hours of tv watched (tvhours).
+
+First of all we look for inappropriate values, and code them as NA: 98 and 99, and also 0 for *agewed*.
+
+\small
+
+```{r DataImport, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+```{r Part3-2-intro1, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+After that we check the assumption of normality (and plot both variables):
+
+\small
+
+```{r Part3-2-intro2, echo = FALSE, message= FALSE, warning = FALSE, fig.cap = "Scatterplot of Age when married against TV hours"} 
+```
+
+\normalsize
+
+Both Shapiro tests are highly significant, so the 2 variables meet the assumption of normality. From the scatterplot we can deduce that the correlation will be very small  (and negative---the later someone gets the married, the less hours he or she watches TV... but the relationship between both variables is very small, most of the people get married between 15 and 40, and watches TV between 0 and 10 hours, forming a round cluster.
+
+\pagebreak
+
+Now we can run the Pearson correlation analysis:
+
+\small
+
+```{r Part3-2-intro3, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+### A. What are the null and alternative hypothesis for your test?
+
+The **null-hypothesis** is that the correlation coefficient is equal to zero, i.e., there is **not** a linear relationship between the two variables. The **alternative hypothesis** is the opposite: a linear relationship exists, so any change in one variable involves (but does not necessarily cause!!) a proportional change in the other variable, in the same or the opposite direction.
+
+### B. What test statistic and p-value do you get?
+
+As shown in the previous page, the  **Pearson correlation coefficient test statistic** is **`r correlation$statistic`** (relatively small in absolute value---for a sample of this size, the absolute value should be close to zero to obtain a statistically significant result), and the **p-value** is **`r correlation$p.value`** (\underline{not statistically significant at all}).
+
+```{r Part3-2-B, message= FALSE, warning = FALSE} 
+```
+
+### C. Evaluate your hypothesis in light of your tests of statistical and practical significance. What, if anything, can you conclude from your results?
+
+There is not a significant relationship between the age at which people get married (for the first time) and the number of hours they watch TV, $r = -0.03, p = 0.3$. Therefore, the **practical significance is null** (*r* should have to be ten times greater to have just a small practical significance), **as well as the statistical significance** (the *p*-value is much greater than 0.05). For that reason, **we cannot reject the null hypothesis**: both variables are uncorrelated.
+
+
+## 3) Task 3: Wilcox rank-sum test to determine whether a new dummy variable (*married*) is associated with the number of children (*childs*) for respondents who are 23 years old.
+
+```{r Part3-3-intro, message= FALSE, warning = FALSE} 
+```
+
+### A. What is the mean of your new "married" variable among 23-year-olds (e.g.,the proportion of cases in the category coded "1")?
+
+```{r Part3-3-A, message= FALSE, warning = FALSE} 
+```
+
+`r round(100*married23_mean, 2)`% of the 23-years-olds (`r sum(Part3.3$married==1)` out of `r length(Part3.3$married)`).
+
+### B. What is the null and alternative hypotheses for your test?
+
+The **null-hypothesis** is that both groups (23-years-olds currently married or not) are equal in terms of the predictor variable (the number of children they have), i.e., the probability distributions of both groups are equal: there is a symmetry between groups with respect to probability of random drawing of a larger observation.
+
+The **alternative hypothesis** is that a particular group have larger values of the predictor variable than the other: the probability of an observation from one group exceeding an observation from the second group (after exclusion of ties) is not equal to 0.5. In this case, that 23-years-olds are more likely to have more children, or vice versa.
+
+### C. What test statistic and p-value do you get?
+
+```{r Part3-3-C, message= FALSE, warning = FALSE} 
+```
+
+As shown above, the **test statistic** is **`r w$statistic`**, and the **p-value** is **`r format(w$p.value, digits = 2, scientific = TRUE)`** (\underline{highly statistically significant}).
+
+### D. Conduct an effect size calculation for your relationship.
+
+The effect size can be calculated as $r = \frac{z}{\sqrt{N}}$, where *z* is the *z*-statistic associated with the p-value that was obtained, and *N* is the total number of observations (in both groups). After creating a simple function that calculates this value, we obtain:
+
+```{r Part3-3-D, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+Since its absolute value is greater than 0.5, we can be sure that the effect size is large.
+
+### E. Evaluate your hypothesis in light of your tests of statistical and practical significance. What, if anything, can you conclude from your results?
+
+As mentioned, the effect size is large, and the p-value was below 0.001, so the Wilcox sum-rank test is both highly statisticaly and practically significant. Wen can reject the null hypothesis, and say that the number of children of currently married 23-years-olds (*Mdn = `r median(Part3.3$childs[Part3.3$married == 1])`*) differ significantly from the number of children of people the same age that are not currently married (*Mdn = `r median(Part3.3$childs[Part3.3$married != 1])`*), *W = `r w$statistic`, p < 0.001, r = -0.69*.
+
+
+## 4) Task 4: Analysis of variance between religious affiliation (*relig*) and age when married (*agewed*).
+
+We had already properly coded *agewed* so we just need to check *relig*:
+
+```{r Part3-4-intro1, message= FALSE, warning = FALSE} 
+```
+
+The next step, after performing the analysis of variance, is to check the assumptions under the *F*-statistic is realiable: normality of distributions within groups, and homogeneity of variance:
+
+```{r Part3-4-intro2, echo = FALSE, message= FALSE, warning = FALSE, fig.cap = "Bar chart of the mean age when married for different religions"} 
+```
+
+There are 2 groups ("Jewish" and "Other") for which the assumption of normality is broken, but in the case of ANOVA that is not so serious, because the *F*-statistic controls the type 1 error well under the condition of non-formality. The really important assumption is the homogeneity of variance, and that one is met (the result is not significant at all, *p*-value = 0.49), so we can perform ANOVA.
+
+```{r Part3-4-intro3, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+### A. What is the null and alternative hypotheses for your test?
+
+Since no specific contrasts are given, the **null hypothesis** is that all groups are simply random samples of the same population, and hence the mean of the continuous variable (*agewed*) does not differ per group (*relig*). The **alternative hypothesis** is that the religion has a statistically significant effect on the age at which people get married, and hence the means per group differ.
+
+### B. What test statistic and p-value do you get?
+
+As shown above, the ***F*-statistic** is **`r summary(aovm)[[1]][1,4]`**, and the ***p*-value** is **`r format(summary(aovm)[[1]][1,5], digits = 2, scientific = TRUE)`** (\underline{highly statistically significant}).
+
+### C. Are there statistically significant differences between individual pairs of groups, and if so, how do you  know?
+
+Since there are no specific hypothesis, we have to perform a **post-hoc test** or **pairwise comparison**, i.e., a series of *t*-tests between all of the different groups to search for specific differences between groups.
+
+In order to control the \underline{familywise error rate}, some correction must be applied. Some of them are tested below:
+
+First, the classical Bonferroni correction, which is the most conservative to guarantee a low Type 1 Error (by losing Statistical Power).
+
+```{r Part3-4-C-1, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+The *sig_stars* function shown in the Asynchronous Material has been used, so *** indicates a *p*-value below 0.001, ** a *p*-value below 0.01, and * a *p*-value below 0.05. The *pairwise.t.test* function already corrects the *p*-values (multiplying them by the corresponding correction factor), so we search for at leat one *, as usual.
+
+The Holm method, which is not so conservative, is also tested:
+
+```{r Part3-4-C-2, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+And so is the Benjamini-Hochberg method, which focuses on minimizing the **FDR**:
+
+```{r Part3-4-C-3, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+Tukey's HSD method is not appropriate since sample sizes are very dissimilar.
+
+As we can see, all of them give similar results: there are significant differences between 3 pairs of groups: Protestant against Catholic---the highest statistically significant result according to all the methods---, Jewish and Other. This complies with the previous bar chart, where we can see these are the only cases in which the SE bars do not overlap.
+
+### D. Evaluate your hypothesis in light of your tests of statistical and practical significance. What, if anything, can you conclude from your results?
+
+First of all, we need to estimate the practical significance. A function that calculates both $R^{2}$ and $\omega^{2}$ is defined, with which we obtain the following results:
+
+```{r Part3-4-D-1, message= FALSE, warning = FALSE} 
+```
+
+$R^{2}$ is close to zero, and $\omega^{2}$ (which is more accurate since $R^{2}$ is slightly biased) lays between 0.01 and 0.06, so the practical significance is small.
+
+But we are more interested in estimating the effect size not of the overall ANOVA, but for the differences between pairs of groups. So the *mes* function of the package *computes.es* was also used to calculate Cohen's *d*.
+
+\small
+
+```{r Part3-4-D-2, echo = FALSE, message= FALSE, warning = FALSE} 
+```
+
+\normalsize
+
+The **ANOVA analysis** revealed a highly statistically significant effect of the religion on the age at which people get married, $F(4,1191) = 8.197, p < 0.00001$. However, the practical significance is very small, $\omega^{2} = 0.02$.
+
+The **post-hoc tests** revealed that there are statistically significant differences between Protestants, and Catholics ($p < 0.001, d = -0.28$), Jews ($p < 0.05, d = -0.68$) and Others ($p < 0.05, d = -0.87$). I.e., the effect are medium-large between Protestants and Jewish and between Protestants and Others, and small-medium between Protestants and Catholics.
